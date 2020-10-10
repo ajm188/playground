@@ -30,7 +30,7 @@ func BenchmarkUnbufferedChannelSend(b *testing.B) {
 
 	go func() {
 		defer wg.Done()
-		for _ = range _ch {
+		for range _ch {
 		}
 	}()
 
