@@ -26,15 +26,18 @@ func BenchmarkUnbufferedChannelSend(b *testing.B) {
 	_ch = make(chan bool)
 
 	var wg sync.WaitGroup
+
 	wg.Add(1)
 
 	go func() {
 		defer wg.Done()
+
 		for range _ch {
 		}
 	}()
 
 	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		_ch <- true
 	}
