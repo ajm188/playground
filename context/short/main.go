@@ -11,24 +11,23 @@ import (
 	"time"
 )
 
-const (
-	shortDuration = time.Millisecond * 1
-)
-
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-var messageCh chan string
+var (
+	messageCh chan string
+	duration  time.Duration
+)
 
 func worker(id int, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	start := time.Now()
 
-	ctx, cancel := context.WithTimeout(context.TODO(), shortDuration)
+	ctx, cancel := context.WithTimeout(context.TODO(), duration)
 	timeNow := time.Now()
 	ctxElapsed := timeNow.Sub(start)
 	//ctx, cancel := context.WithDeadline(ctx, deadline)
@@ -50,6 +49,7 @@ func worker(id int, wg *sync.WaitGroup) {
 func main() {
 	parallelism := flag.Int("parallelism", 10000, "number of workers to spawn")
 	profile := flag.String("profile", "", "where to save CPU profile. no profile is taken if empty")
+	flag.DurationVar(&duration, "worker-timeout", time.Millisecond, "")
 
 	flag.Parse()
 
