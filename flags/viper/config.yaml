@@ -1,0 +1,10 @@
+defaults:
+  discovery: consul
+  discovery-consul-datacenter-tmpl: {{ .Cluster }}
+
+clusters:
+  cluster1:
+    code: code1
+  cluster2:
+    code: code2
+    discovery: etcd2
