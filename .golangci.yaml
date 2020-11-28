@@ -1,0 +1,26 @@
+# config file: https://golangci-lint.run/usage/configuration/#config-file
+# linters: https://golangci-lint.run/usage/linters/
+run:
+  fast: true
+
+linters:
+  presets:
+    - bugs
+    - complexity
+    - format
+    - performance
+    - style
+    - unused
+  disable:
+    - gomnd
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gochecknoglobals
+        - goconst
+        - govet
+        - testpackage
+
+skip-dirs-use-default: true
